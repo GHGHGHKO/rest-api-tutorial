@@ -3,6 +3,7 @@ package me.synology.restapitutorial.controller
 import me.synology.restapitutorial.data.Message
 import me.synology.restapitutorial.service.MessageService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
@@ -25,6 +26,9 @@ class MessageController(
 
     @GetMapping("/messages")
     fun indexList(): List<Message> = messageService.findMessage()
+
+    @GetMapping("/messages/{id}")
+    fun indexId(@PathVariable id: String): List<Message> = messageService.findMessageById(id)
 
     @PostMapping("/messages")
     fun post(@RequestBody message: Message) {

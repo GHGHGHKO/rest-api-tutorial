@@ -2,6 +2,7 @@ package me.synology.restapitutorial.service
 
 import me.synology.restapitutorial.data.Message
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.query
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -9,6 +10,11 @@ import java.util.UUID
 class MessageService(val db: JdbcTemplate) {
     fun findMessage(): List<Message> = db.query("select * from messages") {
         response, _ ->
+        Message(response.getString("id"), response.getString("text"))
+    }
+
+    fun findMessageById(id: String): List<Message> = db.query("select * from messages where id = ?", id) {
+            response, _ ->
         Message(response.getString("id"), response.getString("text"))
     }
 
